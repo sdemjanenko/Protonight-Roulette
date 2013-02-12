@@ -1,3 +1,14 @@
 label {
   display: block;
 }
+
+.meeting {
+  width: 500px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  min-height: 25px;
+  background-color: #eee;
+  margin-bottom: 10px;
+  padding: 5px;
+  text-align: center;
+}
