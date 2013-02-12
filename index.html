@@ -1,11 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href="./style.css" media="screen" rel="Stylesheet" type="text/css"/>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="./roulette.js"></script>
   </head>
   <body>
     <h1>Welcome to Protonight Roulette</h1>
+
+    <form id="create">
+      <h3>Create Form</h3>
+      <input type="†ext" size=30 name="name" placeholder="Meeting name">
+      <textarea name="skills" placeholder="Enter skills"></textarea>
+      <input type="submit" value="Create">
+    </form>
+
+    <form id="join">
+      <h3>Join Form</h3>
+      <label>Name
+        <input type="†ext" name="name" placeholder="Your name">
+      </label>
+      <label>Skill
+        <select name="skill">
+          <option value="developer">Developer</option>
+          <option value="idea">Ideas</option>
+        </select>
+      </label>
+      <label>Picture
+        <input type="file" name="picture">
+      </label>
+      <input type="submit" value="Join">
+    </form>
+
   </body>
   <script type="text/javascript">
     $(init);
