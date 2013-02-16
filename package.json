@@ -1,0 +1,11 @@
+{
+  "name": "Protonight-Roulette",
+  "description": "Randomly group people",
+  "version": "0.0.1",
+  "main": "index.js",
+  "devDependencies": {
+    "express": "*",
+    "redis": "*",
+    "hbs": "*"
+  }
+}

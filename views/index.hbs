@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href="./style.css" media="screen" rel="Stylesheet" type="text/css"/>
-    <link href="./vendor/bootstrap.min.css" media="screen" rel="Stylesheet" type="text/css"/>
+    <link href="./assets/css/style.css" media="screen" rel="Stylesheet" type="text/css"/>
+    <link href="./vendor/css/bootstrap.min.css" media="screen" rel="Stylesheet" type="text/css"/>
   </head>
   <body>
     <h1>Welcome to Protonight Roulette</h1>
     <div id="list"></div>
-    <a href="./create.html" data-target="#createMeeting" role="button" class="btn" data-toggle="modal">Create meeting</a>
+    <a href="./templates/create.html" data-target="#createMeeting" role="button" class="btn" data-toggle="modal">Create meeting</a>
 
     <div id="createMeeting" class="modal hide" tabindex="-1" role="dialog">
       <div class="modal-header">
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <a href="./join.html" data-target="#joinMeeting" role="button" class="btn" data-toggle="modal">Join meeting</a>
+    <a href="./templates/join.html" data-target="#joinMeeting" role="button" class="btn" data-toggle="modal">Join meeting</a>
 
     <div id="joinMeeting" class="modal hide" tabindex="-1" role="dialog">
       <div class="modal-header">
@@ -39,8 +39,8 @@
 
     <!-- scripts go at the end of the body -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="./vendor/bootstrap.min.js"></script>
-    <script src="./roulette.js"></script>
+    <script src="./vendor/javascripts/bootstrap.min.js"></script>
+    <script src="./assets/javascripts/roulette.js"></script>
 
   </body>
 </html>
