@@ -46,6 +46,28 @@ var MeetingListView = Backbone.View.extend({
   }
 });
 
+var MeetingEditView = Backbone.View.extend({
+  el: "#createMeeting",
+  bindings: {
+    ".title": "title",
+    ".skills": "skills"
+  },
+  events: {
+    "click .create": "addToCollection"
+  },
+  render: function() {
+    this.stickit();
+    return this;
+  },
+  addToCollection: function() {
+    console.log("json", this.model.toJSON());
+    this.collection.add(this.model);
+    this.model.save();
+    this.$el.modal('hide');
+    this.remove();
+  }
+});
+
 function cloneSkeleton(el) {
   var clone = el.clone(true);
   clone.removeAttr('id');
@@ -57,27 +79,18 @@ var meetings = new MeetingCollection();
 var meetings_view = new MeetingListView({collection: meetings, el: "#list" });
 
 function init() {
-  $('#createButton').click(createMeeting);
-  $('#joinButton').click(joinMeeting);
+  $("#createMeeting").on('show', createMeetingView);
 
   meetings.fetch();
 }
 
 
-function createMeeting() {
-  var name = $("#create input[name]").val();
-  var skills = $("#create textarea").val().split(/\s*[,\n]+\s*/);
-  var $ul = $('<ul/>', {'class': 'skills'});
-
-  $.each(skills, function(i, skill) {
-    $ul.append($('<li/>', {'class': 'skill'}).text(skill));
+function createMeetingView() {
+  var new_meeting = new MeetingModel();
+  var view = new MeetingEditView({
+    model: new_meeting,
+    collection: meetings
   });
-
-  if (name !== '') {
-    var div = $("<div/>", {'class': 'meeting'}).text(name).append($ul);
-    $("#list").append(div);
-  }
-  $('#createMeeting').modal('hide');
 }
 
 function joinMeeting() {
