@@ -8,12 +8,11 @@ app.set('title', 'Protonight-Roulette');
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.logger());
-app.set('view engine', 'hbs');
 
 
 // Routes stuff
 app.get('/', function(req, res) {
-  res.render('index.hbs');
+  res.sendfile(__dirname + '/index.html');
 });
 
 app.get('/user/:id', function(req, res) {
