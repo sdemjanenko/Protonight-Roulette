@@ -1,19 +1,10 @@
 $(init);
 
-var MeetingModel = Backbone.Model.extend({
-  defaults: {
-    count: 0
-  }
-});
-
-var MeetingCollection = Backbone.Collection.extend({
-  model: MeetingModel
-});
+var MeetingModel = Backbone.Model.extend({ defaults: { count: 0 } });
+var MeetingCollection = Backbone.Collection.extend({ model: MeetingModel });
 
 var MeetingRowView = Backbone.View.extend({
   skeleton: $("#meetingRowSkeleton"),
-  tagName: "li",
-  className: "meeting-row",
   events: {
     "click": "open"
   },
@@ -29,6 +20,7 @@ var MeetingRowView = Backbone.View.extend({
   render: function() {
     this.$el = cloneSkeleton(this.skeleton);
     this.stickit();
+    return this;
   },
   open: function() {
     console.log("opening", this);
@@ -36,21 +28,17 @@ var MeetingRowView = Backbone.View.extend({
 });
 
 var MeetingListView = Backbone.View.extend({
-  tagName: "ul",
-  className: "meeting-list",
   initialize: function() {
     this.listenTo(this.collection, "reset", this.render);
   },
   render: function() {
     var _this = this;
-    _.each(this.collection.models, function(model) {
-      _this.add(model);
-    });
+    _.each(this.collection.models, function(model) { _this.add(model); });
     return this;
   },
   add: function(model) {
-    var view = new MeetingRowView({ model: model });
-    this.$el.append(view.$el);
+    var row_view = new MeetingRowView({ model: model });
+    this.$el.append(row_view.$el);
   }
 });
 
@@ -63,6 +51,7 @@ function cloneSkeleton(el) {
 
 var meetings = new MeetingCollection();
 var meetings_view = new MeetingListView({collection: meetings, el: "#list" });
+
 function init() {
   $('#createButton').click(createMeeting);
   $('#joinButton').click(joinMeeting);
@@ -74,7 +63,6 @@ function init() {
 
 
 function createMeeting() {
-  //$("#create").submit();
   var name = $("#create input[name]").val();
   var skills = $("#create textarea").val().split(/\s*[,\n]+\s*/);
   var $ul = $('<ul/>', {'class': 'skills'});
@@ -88,8 +76,6 @@ function createMeeting() {
     $("#list").append(div);
   }
   $('#createMeeting').modal('hide');
-
-  // talk to server here
 }
 
 function joinMeeting() {
