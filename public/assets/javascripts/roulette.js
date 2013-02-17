@@ -1,7 +1,10 @@
 $(init);
 
 var MeetingModel = Backbone.Model.extend({ defaults: { count: 0 } });
-var MeetingCollection = Backbone.Collection.extend({ model: MeetingModel });
+var MeetingCollection = Backbone.Collection.extend({
+  model: MeetingModel,
+  url: "/meetings"
+});
 
 var MeetingRowView = Backbone.View.extend({
   skeleton: $("#meetingRowSkeleton"),
@@ -30,13 +33,14 @@ var MeetingRowView = Backbone.View.extend({
 var MeetingListView = Backbone.View.extend({
   initialize: function() {
     this.listenTo(this.collection, "reset", this.render);
+    this.listenTo(this.collection, "add", this.addRow);
   },
   render: function() {
     var _this = this;
-    _.each(this.collection.models, function(model) { _this.add(model); });
+    _.each(this.collection.models, function(model) { _this.addRow(model); });
     return this;
   },
-  add: function(model) {
+  addRow: function(model) {
     var row_view = new MeetingRowView({ model: model });
     this.$el.append(row_view.$el);
   }
@@ -56,9 +60,7 @@ function init() {
   $('#createButton').click(createMeeting);
   $('#joinButton').click(joinMeeting);
 
-  $.get("/meetings", function(data) {
-    meetings.reset(data);
-  });
+  meetings.fetch();
 }
 
 
