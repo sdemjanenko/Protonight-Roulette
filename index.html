@@ -7,25 +7,26 @@
   <body>
     <h1>Welcome to Protonight Roulette</h1>
     <ul id="list"></ul>
-    <a href="#createMeeting" role="button" class="btn" data-toggle="modal">Create meeting</a>
+    <button class="btn" id="createMeetingButton">Create meeting</button>
 
-    <div id="createMeeting" class="modal hide" tabindex="-1" role="dialog">
+    <div id="editMeeting" class="modal hide" tabindex="-1" role="dialog">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">x</button>
-        <h3>Create a meeting</h3>
+        <h3 class="create">Create meeting</h3>
+        <h3 class="update" style="display:none">Update meeting</h3>
       </div>
-      <div class="modal-body">
-        <h3>Create Form</h3>
+      <div class="modal-body" id="meetingView">
         <label>Meeting Name
           <input type="†ext" size=30 class="title"  placeholder="Monthly Protonight">
         </label>
-        <label>Enter Skills
-          <textarea class="skills" placeholder="Devs, Ideas, Marketing"></textarea>
+        <label>Skill Groups
+          <textarea class="skills" placeholder="Devs, Ideas, ..."></textarea>
         </label>
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal">Close</button>
-        <button class="btn btn-primary create">Create</button>
+        <button class="btn btn-primary save create">Create</button>
+        <button class="btn btn-primary save update" style="display:none">Update</button>
       </div>
     </div>
 
@@ -68,6 +69,7 @@
         <div>Title: <span class="title"></span></div>
         <div>Skills: <span class="skills"></span></div>
         <div>Count: <span class="count"></span></div>
+        <button class="btn edit">Edit</button>
       </li>
     </div>
 

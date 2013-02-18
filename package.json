@@ -5,6 +5,7 @@
   "dependencies": {
     "express": "*",
     "redis": "0.7.2",
-    "hiredis": "*"
+    "hiredis": "*",
+    "underscore": "*"
   }
 }

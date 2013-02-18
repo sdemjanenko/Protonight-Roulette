@@ -29,9 +29,15 @@ app.post('/meetings', function(req, res) {
 });
 
 // show details for a particular meeting
-app.get('/meeting/:id', function(req, res) {
+app.get('/meetings/:id', function(req, res) {
   var id = req.params.id;
   Meeting.find(id, function(meeting) { res.send(meeting); });
+});
+
+app.put('/meetings/:id', function(req, res) {
+  var id = req.params.id;
+  var data = req.body;
+  Meeting.update(id, data, function(meeting) { res.send(meeting); });
 });
 
 app.listen(PORT);

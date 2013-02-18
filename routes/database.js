@@ -1,5 +1,6 @@
 var redis = require('redis');
 var db = redis.createClient();
+var _ = require('underscore')._;
 
 // setup redis helpers
 //redis.debug_mode = true;
@@ -44,6 +45,17 @@ Meeting.create = function(attributes, callback) {
       if (err) throw err;
       db.zadd("meetings", (new Date()).getTime()/1000 + dbExpire, key);
       db.expire(key, dbExpire); // only let the key live for 10 seconds
+      callback(attributes);
+    });
+  });
+};
+
+Meeting.update = function(id, attributes, callback) {
+  var key = "meetings/" + id;
+  db.hgetall(key, function(err, val) {
+    if (err) throw err;
+    db.hmset(key, _.extend(val, attributes), function(err) {
+      if (err) throw err;
       callback(attributes);
     });
   });

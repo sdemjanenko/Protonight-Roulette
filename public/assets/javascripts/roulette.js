@@ -9,7 +9,8 @@ var MeetingCollection = Backbone.Collection.extend({
 var MeetingRowView = Backbone.View.extend({
   skeleton: $("#meetingRowSkeleton"),
   events: {
-    "click": "open"
+    "click .edit": "edit",
+    "click :not(.edit)": "open"
   },
   bindings: {
     ".title": "title",
@@ -24,6 +25,12 @@ var MeetingRowView = Backbone.View.extend({
     this.$el = cloneSkeleton(this.skeleton);
     this.stickit();
     return this;
+  },
+  edit: function() {
+    new MeetingEditView({
+      model: this.model,
+      collection: this.model.collection
+    });
   },
   open: function() {
     console.log("opening", this);
@@ -47,24 +54,36 @@ var MeetingListView = Backbone.View.extend({
 });
 
 var MeetingEditView = Backbone.View.extend({
-  el: "#createMeeting",
+  el: "#editMeeting",
+  initialize: function() {
+    this.$el.modal('show');
+    this.render();
+  },
   bindings: {
     ".title": "title",
     ".skills": "skills"
   },
   events: {
-    "click .create": "addToCollection"
+    "click .save": "save"
   },
   render: function() {
+    this.$el.closest(".modal")
+      .find('.create').toggle(this.model.isNew()).end()
+      .find('.update').toggle(!this.model.isNew());
     this.stickit();
     return this;
   },
-  addToCollection: function() {
-    console.log("json", this.model.toJSON());
-    this.collection.add(this.model);
+  save: function() {
+    console.log("saving", this.model.toJSON());
+    if (!this.model.collection) this.collection.add(this.model);
     this.model.save();
-    this.$el.modal('hide');
     this.remove();
+  },
+  remove: function() {
+    // dont remove el
+    this.$el.modal('hide');
+    this.stopListening();
+    return this;
   }
 });
 
@@ -79,16 +98,15 @@ var meetings = new MeetingCollection();
 var meetings_view = new MeetingListView({collection: meetings, el: "#list" });
 
 function init() {
-  $("#createMeeting").on('show', createMeetingView);
+  $("#createMeetingButton").click(createMeetingView);
 
   meetings.fetch();
 }
 
 
 function createMeetingView() {
-  var new_meeting = new MeetingModel();
-  var view = new MeetingEditView({
-    model: new_meeting,
+  new MeetingEditView({
+    model: new MeetingModel(),
     collection: meetings
   });
 }
